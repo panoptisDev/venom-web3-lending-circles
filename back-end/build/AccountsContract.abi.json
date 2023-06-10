@@ -1,0 +1,109 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"serviceAddress","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createAccount",
+			"inputs": [
+				{"name":"publicKey","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setAccount",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"accountAddress","type":"address"},
+				{"name":"username","type":"string"},
+				{"name":"email","type":"string"}
+			],
+			"outputs": [
+				{"name":"done","type":"bool"},
+				{"name":"err","type":"uint16"}
+			]
+		},
+		{
+			"name": "getAccount",
+			"inputs": [
+				{"name":"accountAddress","type":"address"}
+			],
+			"outputs": [
+				{"components":[{"name":"created","type":"bool"},{"name":"activated","type":"bool"},{"name":"publicKey","type":"uint256"},{"name":"username","type":"string"},{"name":"email","type":"string"},{"name":"emailVerified","type":"bool"},{"name":"profileContractAddress","type":"address"},{"name":"status","type":"string"}],"name":"account","type":"tuple"}
+			]
+		},
+		{
+			"name": "isUsenameAvailable",
+			"inputs": [
+				{"name":"username","type":"string"}
+			],
+			"outputs": [
+				{"name":"available","type":"bool"}
+			]
+		},
+		{
+			"name": "isEmailAvailable",
+			"inputs": [
+				{"name":"email","type":"string"}
+			],
+			"outputs": [
+				{"name":"available","type":"bool"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"version","type":"string"},
+		{"key":2,"name":"accountProfileContractCode","type":"cell"}
+	],
+	"events": [
+		{
+			"name": "AccountCreated",
+			"inputs": [
+				{"name":"account","type":"address"},
+				{"name":"at","type":"uint64"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "AccountProfileCreated",
+			"inputs": [
+				{"name":"account","type":"address"},
+				{"name":"accountProfile","type":"address"},
+				{"name":"at","type":"uint64"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ErrorMessage",
+			"inputs": [
+				{"name":"code","type":"uint16"},
+				{"name":"message","type":"string"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"version","type":"string"},
+		{"name":"accountProfileContractCode","type":"cell"},
+		{"name":"_serviceAddress","type":"address"},
+		{"name":"_ownerPublicKey","type":"uint256"},
+		{"components":[{"name":"created","type":"bool"},{"name":"activated","type":"bool"},{"name":"publicKey","type":"uint256"},{"name":"username","type":"string"},{"name":"email","type":"string"},{"name":"emailVerified","type":"bool"},{"name":"profileContractAddress","type":"address"},{"name":"status","type":"string"}],"name":"_accounts","type":"map(address,tuple)"},
+		{"name":"_takenUsernames","type":"optional(cell)"},
+		{"name":"_takenEmails","type":"optional(cell)"}
+	]
+}

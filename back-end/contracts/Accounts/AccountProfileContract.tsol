@@ -1,0 +1,79 @@
+pragma ever-solidity >= 0.62.0;
+pragma AbiHeader expire;
+pragma AbiHeader time;
+pragma AbiHeader pubkey;
+
+contract AccountProfileContract {
+    address static accountsContractAddress;
+    address static accountAddress;
+    
+    address _serviceAccount;
+    uint256 _ownerPublicKey;
+
+    string _fullName;
+	string _username;
+	uint64 _createdAt;
+	uint64 _updatedAt;
+
+    // Modifiers
+    modifier onlyOwner() {
+        require(msg.pubkey() == _ownerPublicKey, 401);
+		_;
+	}
+    modifier cashBack(uint256 newwReserve) {
+        require(msg.value >= newwReserve, 102);
+		_;
+		tvm.rawReserve((address(this).balance - msg.value) + newwReserve, 0);
+		msg.sender.transfer({ value: 0, flag: 128, bounce: false });
+	}
+
+    // Events
+    event AccountProfileCreated(address account, address profile, uint64 createdAt);
+    event AccountProfileUpdated(string fullName, uint64 updatedAt);
+
+    // Constructor
+    constructor(address serviceAccount) public {
+        // tvm.accept();
+        tvm.rawReserve(100_000_000, 0);
+        _serviceAccount = serviceAccount;
+        _ownerPublicKey = msg.pubkey();
+        _createdAt = block.timestamp;
+        accountAddress.transfer({ value: 0, flag: 128, bounce: false });
+
+        emit AccountProfileCreated(accountAddress, address(this), block.timestamp);
+    }
+    
+    function updateProfile(string fullName) public cashBack(100_000_000) {
+        _updateProfile(fullName);
+    }
+    
+    function _updateProfile(string fullName)
+        internal
+    {
+        _fullName = fullName;
+        _updatedAt = block.timestamp;
+
+        emit AccountProfileUpdated(_fullName, _updatedAt);
+	}
+
+    function getAccountProfile() external onlyOwner view returns (string fullName) {
+        tvm.accept();
+		return _fullName;
+	}
+    
+    function getOwner() external view returns (address) {
+		return accountAddress;
+	}
+    
+    function withdraw() public responsible view returns (bool done) {
+        tvm.accept();
+        accountAddress.transfer({ value: 0, flag: 128 + 32, bounce: false });
+         return{value: 0, bounce: false, flag: 64} true;
+    }
+    
+    function deleteProfile() public responsible view returns (bool done) {
+        tvm.accept();
+        accountAddress.transfer({ value: 0, flag: 128 + 32, bounce: false });
+         return{value: 0, bounce: false, flag: 64} true;
+    }
+}

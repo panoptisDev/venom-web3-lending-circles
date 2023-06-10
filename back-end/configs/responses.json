@@ -1,0 +1,193 @@
+{
+    "200": {
+        "done": true,
+        "message_type": "success",
+        "messages": [
+            {
+                "id": 1,
+                "en": "All is done successfully."
+            },
+            {
+                "id": 1,
+                "en": "You have successfully connected."
+            }
+        ]
+    },
+    "400": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "Captcha is required."
+            },
+            {
+                "id": 2,
+                "en": "Make sure all fields are filled in correctly."
+            },
+            {
+                "id": 3,
+                "en": "Make sure all required fields are filled in correctly."
+            },
+            {
+                "id": 4,
+                "en": "User must accept with end-user license agreement."
+            }
+        ]
+    },
+    "401": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "You don't have permission for this."
+            },
+            {
+                "id": 2,
+                "en": "Authorization token expired."
+            },
+            {
+                "id": 3,
+                "en": "Authorization token is invalid."
+            }
+        ]
+    },
+    "402": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "Only owner can do this."
+            },
+            {
+                "id": 2,
+                "en": "Only main account can do this."
+            },
+            {
+                "id": 3,
+                "en": "Only linked accounts can do this."
+            }
+        ]
+    },
+    "404": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "Sorry can't find that."
+            }
+        ]
+    },
+    "405": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "Username already taken, please choose another one."
+            },
+            {
+                "id": 2,
+                "en": "Invite code duplicated error."
+            },
+            {
+                "id": 3,
+                "en": "Invite code is not valid."
+            },
+            {
+                "id": 4,
+                "en": "The invite code has expired."
+            },
+            {
+                "id": 5,
+                "en": "You have already accepted this invite."
+            },
+            {
+                "id": 6,
+                "en": "This email address has already been added."
+            }
+        ]
+    },
+    "407": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "The main account does not exist in Piltonet."
+            }
+        ]
+    },
+    "411": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            
+            {
+                "id": 1,
+                "en": "It is not possible to change the circle after launch."
+            },
+            {
+                "id": 2,
+                "en": "The circle has already been launched."
+            },
+            {
+                "id": 3,
+                "en": "The selected month is already chosen."
+            },
+            {
+                "id": 11,
+                "en": "It is not possible to remove started circle."
+            },
+            {
+                "id": 12,
+                "en": "It is not possible to remove launch because of minted NFTs."
+            },
+            {
+                "id": 13,
+                "en": "Sorry this collection Launch is Sold out."
+            },
+            {
+                "id": 14,
+                "en": "Sorry there's not enough item to minting."
+            }
+        ]
+    },
+    "413": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "The prediction time for this match is over."
+            },
+            {
+                "id": 2,
+                "en": "Prediction for this match has already been submitted."
+            }
+        ]
+    },
+    "500": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "Internal fatal error."
+            }
+        ]
+    },
+    "502": {
+        "done": false,
+        "message_type": "error",
+        "messages": [
+            {
+                "id": 1,
+                "en": "There was an error fetching the contract.<br>Please make sure the address and network are correct and try again."
+            }
+        ]
+    }
+}

@@ -1,0 +1,768 @@
+.version sol 0.62.0
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 37
+PUSHINT 100000000
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 38
+SETGLOB 12
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 39
+GETGLOB 5
+DUP
+ISNULL
+PUSHCONT {
+	DROP
+	PUSHINT 0
+}
+IF
+SETGLOB 13
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 40
+BLOCKLT
+SETGLOB 16
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 41
+GETGLOB 11
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHPOW2 7
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 43
+BLOCKLT
+MYADDR
+GETGLOB 11
+PUSHSLICE xc0000000000000000000000001
+NEWC
+STSLICE
+ROLLREV 3
+NEWC
+STSLICECONST x489714c9
+STSLICE
+ROTREV
+NEWC
+STSLICE
+STU 64
+STBREFR
+STBREFR
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro updateProfile
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 46
+LDREF
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $updateProfile_009299e3_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	updateProfile_009299e3_internal
+.type	updateProfile_009299e3_internal, @function
+CALL $updateProfile_009299e3_internal_macro$
+
+.macro updateProfile_009299e3_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 46
+PUSHINT 100000000
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 24
+DEPTH
+ADDCONST -2
+PICK
+OVER
+GEQ
+THROWIFNOT 102
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 25
+SWAP
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 47
+CALLREF {
+	CALL $_updateProfile_920d1fcf_internal_macro$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 26
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+ADD
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 27
+GETGLOB 9
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHPOW2 7
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.globl	_updateProfile_920d1fcf_internal
+.type	_updateProfile_920d1fcf_internal, @function
+CALL $_updateProfile_920d1fcf_internal_macro$
+
+.macro _updateProfile_920d1fcf_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 53
+SETGLOB 14
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 54
+BLOCKLT
+DUP
+SETGLOB 17
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 56
+GETGLOB 14
+PUSHSLICE xc000000000000000000000000030f6c540
+NEWC
+STSLICE
+STREF
+STU 64
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.macro getAccountProfile
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 59
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $getAccountProfile_7a12a0d3_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 2921934606
+	STUR 130
+	STREF
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro getAccountProfile_7a12a0d3_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 20
+GETGLOB 5
+DUP
+ISNULL
+PUSHCONT {
+	DROP
+	PUSHINT 0
+}
+IF
+GETGLOB 13
+EQUAL
+THROWIFNOT 401
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 60
+ACCEPT
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 61
+GETGLOB 14
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.macro getOwner
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 64
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $getOwner_893d20e8_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	SWAP
+	NEWC
+	STSLICECONST x9ea5175d
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro getOwner_893d20e8_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 65
+GETGLOB 11
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.macro withdraw
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 68
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $withdraw_3ccfd60b_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 4106543981
+	STUR 130
+	STI 1
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	STSLICECONST x2_
+	STI 1
+	STSLICECONST x1_
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 106
+	STZEROES
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STI 1
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	withdraw_3ccfd60b_internal
+.type	withdraw_3ccfd60b_internal, @function
+CALL $withdraw_3ccfd60b_internal_macro$
+
+.macro withdraw_3ccfd60b_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 69
+ACCEPT
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 70
+GETGLOB 11
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 160
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 71
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+FALSE
+SETINDEXQ 1
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+TRUE
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.macro deleteProfile
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 74
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+CALLREF {
+	CALL $deleteProfile_6d4540eb_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 2562486566
+	STUR 130
+	STI 1
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	STSLICECONST x2_
+	STI 1
+	STSLICECONST x1_
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 106
+	STZEROES
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STI 1
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.globl	deleteProfile_6d4540eb_internal
+.type	deleteProfile_6d4540eb_internal, @function
+CALL $deleteProfile_6d4540eb_internal_macro$
+
+.macro deleteProfile_6d4540eb_internal_macro
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 75
+ACCEPT
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 76
+GETGLOB 11
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 160
+SENDRAWMSG
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 77
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+FALSE
+SETINDEXQ 1
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+TRUE
+.loc ../contracts/Accounts/AccountProfileContract.tsol, 0
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 256
+LDREF
+LDREF
+LDU 64
+LDU 64
+ENDS
+SETGLOB 17
+SETGLOB 16
+SETGLOB 15
+SETGLOB 14
+SETGLOB 13
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHINT 1
+	OVER
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
+	}
+	IFNOT
+	PUSHINT 2
+	PUSH S2
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
+	}
+	IFNOT
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	PUSHINT 0
+	PUSHREF {
+	}
+	DUP
+	PUSHINT 0
+	DUP
+	SETGLOB 17
+	SETGLOB 16
+	SETGLOB 15
+	SETGLOB 14
+	SETGLOB 13
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 17
+GETGLOB 16
+GETGLOB 15
+GETGLOB 14
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STSLICE
+ROLLREV 7
+NEWC
+STSLICE
+ROLLREV 6
+NEWC
+STSLICE
+STU 256
+STREF
+STREF
+STU 64
+STU 64
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+LDU 4 ; bounced tail
+LDMSGADDR ; bounced src tail
+DROP
+SETGLOB 9
+MODPOW2 1
+GETGLOB 4
+TRUE
+SETINDEXQ 1
+PUSHINT 10000000
+SETINDEXQ 2
+NULL
+SETINDEXQ 3
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
+IFRET
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 9
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHPOW2 9
+	LDSLICEX ; signatureSlice msgSlice
+	DUP
+	HASHSU ; signatureSlice msgSlice hashMsgSlice
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice hasPubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
+	DUP
+	SETGLOB 5
+	CHKSIGNU ; msgSlice isSigned
+	THROWIFNOT 40
+}
+PUSHCONT {
+	LDU 1 ; hasPubkey msgSlice
+	SWAP
+	THROWIF 58
+}
+IFELSE
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.macro public_function_selector
+DUP
+PUSHINT 876637160
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 415002918
+	EQUAL
+	IFJMPREF {
+		CALL $deleteProfile$
+	}
+	DUP
+	PUSHINT 514135901
+	EQUAL
+	IFJMPREF {
+		CALL $getOwner$
+	}
+	DUP
+	PUSHINT 774450958
+	EQUAL
+	IFJMPREF {
+		CALL $getAccountProfile$
+	}
+	DUP
+	PUSHINT 876637160
+	EQUAL
+	IFJMPREF {
+		CALL $updateProfile$
+	}
+}
+DUP
+PUSHINT 1959060333
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1196840156
+	EQUAL
+	IFJMPREF {
+		CALL $constructor$
+	}
+	DUP
+	PUSHINT 1959060333
+	EQUAL
+	IFJMPREF {
+		CALL $withdraw$
+	}
+}
+

@@ -1,0 +1,144 @@
+// element-plus overwrite
+.el-overlay,
+.el-loading-mask {
+    background-color: rgba(var(--ptn-second-bg-rgb), 0.5) !important;
+    backdrop-filter: blur(5px);
+}
+
+.el-notification {
+    border: 0 !important;
+    background-color: var(--ptn-third-blue) !important;
+    padding: 1.5rem !important;
+}
+
+.el-notification .el-notification__title {
+    color: var(--ptn-btn-color) !important;
+}
+
+.el-notification .el-notification__content p {
+    color: var(--ptn-btn-color) !important;
+}
+
+.el-notification .el-notification__closeBtn {
+    color: var(--ptn-gray) !important;
+}
+
+.el-notification.right {
+    right: 0;
+}
+
+.el-dialog__body {
+    font-size: 16px;
+    color: var(--ptn-color) !important;
+    padding: 1rem 2rem 0 !important;
+}
+
+.el-dialog__header {
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    padding-bottom: 0;
+}
+
+.el-dialog__title {
+    color: var(--ptn-color) !important;
+    font-size: 20px;
+}
+
+.el-dialog__footer {
+    color: var(--ptn-color) !important;
+    padding: 0 1.5rem 1.5rem;
+    text-align: center;
+}
+.el-button--success {
+    background-color: rgba(var(--ptn-green-rgb), 0.9);
+    border-color: rgba(var(--ptn-green-rgb), 0.9);
+}
+.el-button--danger {
+    background-color: rgba(var(--ptn-red-rgb), 0.9);
+    border-color: rgba(var(--ptn-red-rgb), 0.9);
+}
+.el-button--warning {
+    background-color: rgba(var(--ptn-orange-rgb), 0.9);
+    border-color: rgba(var(--ptn-orange-rgb), 0.9);
+}
+
+.el-dialog.connected-dialog .el-dialog__header .el-dialog__title {
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+}
+
+.el-dialog.connected-dialog,
+.el-dialog.disconnect-dialog {
+  background-color: var(--ptn-bg) !important;
+  border-radius: 16px;
+//   box-shadow: 0 0 30px 1px rgba(var(--ptn-color-rgb), 0.3);
+  margin-top: max(20px, 50vh - 150px);
+  max-width: 96%;
+}
+.el-dialog.connected-dialog {
+  width: 500px;
+  text-align: left;
+}
+.el-dialog.disconnect-dialog {
+  width: 410px;
+}
+.el-popper {
+    max-width: 250px;
+    text-align: justify;
+    text-justify: inter-character;
+    border-radius: 8px;
+}
+
+.share-link-modal {
+    background-color: var(--ptn-bg) !important;
+    border-radius: 0.5rem !important;
+    margin-top: max(100px, 50vh - 150px);
+    width: 450px;
+    max-width: 96%;
+    text-align: center !important;
+}
+
+.calendar-modal {
+    background-color: var(--ptn-bg) !important;
+    border-radius: 0.5rem !important;
+    margin-top: max(100, 50vh - 250px);
+    width: 350px;
+    max-width: 100%;
+    max-width: 96%;
+    text-align: center !important;
+  }
+.calendar-button {
+    background: var(--ptn-btn-bg);
+    color: var(--ptn-btn-color);
+    border: none;
+}
+
+.cropper-dialog {
+    background-color: var(--ptn-bg) !important;
+    border-radius: 0.5rem !important;
+    margin-top: max(20px, 50vh - 450px);
+    width: 450px;
+    height: 550px;
+    max-width: 96%;
+    text-align: center !important;
+}
+.vue-advanced-cropper__background {
+    width: 450px !important;
+    height: 450px !important;
+}
+.vue-advanced-cropper__background, .vue-advanced-cropper__foreground {
+    background-color: var(--ptn-bg) !important;
+}
+
+#message-modal .el-dialog__body {
+    padding: 1rem 1.5rem !important;
+}
+.message-dialog {
+    text-align: center !important;
+    background-color: var(--ptn-bg) !important;
+    border-radius: 0.5rem !important;
+    width: 500px;
+    max-width: 96%;
+    margin: max(2rem, 50vh - 100px) auto 0;
+    padding: 0;
+}

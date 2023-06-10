@@ -1,0 +1,129 @@
+pragma ever-solidity >=0.62.0;
+pragma AbiHeader expire;
+pragma AbiHeader time;
+pragma AbiHeader pubkey;
+
+import "./AccountProfileContract.tsol";
+
+contract AccountsContract {
+  string static version;
+  TvmCell static accountProfileContractCode;
+
+  address _serviceAddress;
+  uint256 _ownerPublicKey;
+
+  struct Account {
+    bool created;
+    bool activated;
+    uint256 publicKey;
+    string username;
+    string email;
+    bool emailVerified;
+    address profileContractAddress;
+    string status;
+  }
+
+  mapping(address => Account) _accounts;
+  mapping(string => bool) _takenUsernames;
+  mapping(string => bool) _takenEmails;
+
+  // Modifiers
+  modifier onlyContractOwner() {
+    require(msg.pubkey() == _ownerPublicKey, 401);
+    _;
+  }
+  modifier onlyAccountOwner(address accountAddress) {
+    require(msg.sender == accountAddress || msg.pubkey() == _accounts[accountAddress].publicKey, 402);
+    _;
+  }
+
+  // Events
+  event AccountCreated(address account, uint64 at);
+  event AccountProfileCreated(address account, address accountProfile, uint64 at);
+  event ErrorMessage(uint16 code, string message);
+
+  // Constructor
+  constructor(address serviceAddress) public {
+    tvm.accept();
+    tvm.rawReserve(100_000_000, 0);
+    _serviceAddress = serviceAddress;
+    _ownerPublicKey = msg.pubkey();
+    _serviceAddress.transfer({ value: 0, flag: 128, bounce: false });
+  }
+
+  function createAccount(uint256 publicKey) external internalMsg {
+    address accountAddress = msg.sender;
+    if (!_accounts[accountAddress].created) {
+      tvm.rawReserve(10_000_000, 4);
+
+      // Create AccountProfileContract
+      TvmCell accountProfileStateInit = tvm.buildStateInit({
+        contr: AccountProfileContract,
+        varInit: { accountsContractAddress: address(this), accountAddress: accountAddress },
+        code: accountProfileContractCode
+      });
+      address profileContractAddress = new AccountProfileContract{
+        stateInit: accountProfileStateInit,
+        value: 0,
+        flag: 128
+      }(_serviceAddress);
+
+      _accounts[accountAddress].created = true;
+      _accounts[accountAddress].publicKey = publicKey;
+      _accounts[accountAddress].profileContractAddress = profileContractAddress;
+      _accounts[accountAddress].status = "fresh";
+      emit AccountCreated(accountAddress, block.timestamp);
+    } else {
+      tvm.rawReserve(0, 4);
+      accountAddress.transfer({ value: 0, flag: 128, bounce: false });
+    }
+  }
+
+  function setAccount(
+    address accountAddress,
+    string username,
+    string email
+  ) public responsible onlyAccountOwner(accountAddress) returns (bool done, uint16 err) {
+    tvm.accept();
+    if (!_accounts[accountAddress].created) return { value: 0, bounce: false, flag: 64 } (false, 402);
+    if (!isUsenameAvailable(username) && _accounts[accountAddress].username.toLowerCase() != username.toLowerCase())
+      return { value: 0, bounce: false, flag: 64 } (false, 102);
+    if (!isEmailAvailable(email) && _accounts[accountAddress].email.toLowerCase() != email.toLowerCase())
+      return { value: 0, bounce: false, flag: 64 } (false, 103);
+    setAccountUsername(accountAddress, username);
+    setAccountEmail(accountAddress, email);
+    return { value: 0, bounce: false, flag: 64 } (true, 0);
+  }
+
+  function setAccountUsername(address accountAddress, string username) internal {
+    bytes bOldUsername = bytes(_accounts[accountAddress].username);
+    if (bOldUsername.length > 0 && _accounts[accountAddress].username.toLowerCase() != username.toLowerCase()) {
+      _takenUsernames[username.toLowerCase()] = false;
+    }
+    _takenUsernames[username.toLowerCase()] = true;
+    _accounts[accountAddress].username = username;
+  }
+
+  function setAccountEmail(address accountAddress, string email) internal {
+    bytes bOldEmail = bytes(_accounts[accountAddress].email);
+    if (bOldEmail.length > 0 && _accounts[accountAddress].email.toLowerCase() != email.toLowerCase()) {
+      _takenEmails[email.toLowerCase()] = false;
+    }
+    _takenEmails[email.toLowerCase()] = true;
+    _accounts[accountAddress].email = email;
+  }
+
+  function getAccount(address accountAddress) external view returns (Account account) {
+    return _accounts[accountAddress];
+  }
+
+  function isUsenameAvailable(string username) public view returns (bool available) {
+    bytes bUsername = bytes(username);
+    return bUsername.length >= 4 && bUsername.length <= 25 && !_takenUsernames[username.toLowerCase()];
+  }
+
+  function isEmailAvailable(string email) public view returns (bool available) {
+    bytes bEmail = bytes(email);
+    return bEmail.length > 0 && !_takenEmails[email.toLowerCase()];
+  }
+}

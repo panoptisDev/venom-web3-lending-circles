@@ -1,0 +1,200 @@
+pragma ever-solidity >=0.62.0;
+
+pragma AbiHeader expire;
+pragma AbiHeader time;
+pragma AbiHeader pubkey;
+
+contract LendingCircleBase {
+	/**
+	* Statics
+	**/
+	string static version;
+	address static circleOwner;
+	address static serviceAddress;
+	uint16 static nonce;
+
+	/**
+	* Constants
+	**/
+	uint8 constant sender_is_not_owner = 101;
+	uint8 constant value_is_less_than_required = 102;
+	uint8 constant circle_is_already_launched = 103;
+	uint8 constant pay_amount_is_out_of_range = 104;
+	uint8 constant members_number_is_out_of_range = 105;
+	uint8 constant winners_number_is_invalid = 106;
+	uint8 constant patience_benefit_is_out_of_range = 107;
+	uint8 constant circle_is_not_ready_for_launch = 108;
+	uint8 constant start_date_is_out_of_range = 109;
+
+	uint256 constant remain_on_circle = 1_000_000_000; // 1 venom
+	uint8 constant circle_min_members = 3;
+	uint8 constant circle_max_members = 15;
+	address constant circle_payment_token = address(0); // venom
+	uint256 constant circle_min_pay_per_round = 50_000_000_000; // 50 venom
+	uint256 constant circle_max_pay_per_round = 500_000_000_000; // 500 venom
+	uint16 constant circle_service_charge_x1000 = 20; // The service charge is 0.2%
+	uint16 constant circle_max_creator_earnings_x1000 = 100; // The maximum creator earnings is 1%
+	uint16 constant circle_max_patience_benefit_x1000 = 3600; // The maximum benefit of patience (per year) is 36%
+
+	/**
+	* Variables
+	**/
+	uint256 _ownerPublicKey;
+	string _circleName;
+	uint16 _creatorEarnings_x10000; // Multiplied by Ten Thousand Times
+	uint16 _roundDays;
+	enum PaymentType {
+		FIXED_PAY,
+		FIXED_LOAN
+	}
+	PaymentType _paymentType;
+	uint256 _fixedAmount;
+	uint8 _minMembers;
+	uint8 _maxMembers;
+	enum WinnersOrder {
+		RANDOM,
+		FIXED,
+		AUCTION
+	}
+	WinnersOrder _winnersOrder;
+	uint8 _winnersNumber;
+	uint16 _patienceBenefit_x10000; // Multiplied by Ten Thousand Times
+	enum CircleStatus {
+		DEPLOYED,
+		SETUPED,
+		LAUNCHED,
+		STARTED,
+		PAUSED,
+		STOPED,
+		COMPLETED
+	}
+	CircleStatus _circleStatus;
+
+	address _paymentToken;
+	uint256 _startDate;
+	uint8 _roundIndex = 0;
+	uint8 _maxRounds = 0;
+
+	/**
+	* Events
+	**/
+  	event CircleIsSet(address circleContract, string cirleName, address circleOwner, address circleCreator);
+  	event CircleLaunched(address circleContract, string cirleName, address circleOwner, address circleCreator);
+
+	/**
+	* Constructor
+	**/
+	constructor(
+		address paymentToken,
+		uint16 roundDays,
+		PaymentType paymentType,
+		uint16 creatorEarnings_x10000
+	) public {
+		tvm.accept();
+		_paymentToken = paymentToken;
+		_roundDays = roundDays;
+		_paymentType = paymentType;
+		_creatorEarnings_x10000 = creatorEarnings_x10000;
+		_circleStatus = CircleStatus.DEPLOYED;
+		_ownerPublicKey = msg.pubkey();
+		
+		tvm.rawReserve(remain_on_circle, 0);
+		circleOwner.transfer({ value: 0, flag: 128, bounce: false });
+	}
+
+	/**
+	* Functions
+	**/
+	function _setCircle(
+		string circleName,
+		uint256 fixedAmount,
+		uint8 minMembers,
+		uint8 maxMembers,
+		WinnersOrder winnersOrder,
+		uint8 winnersNumber,
+		uint16 patienceBenefit_x10000
+	)
+	internal
+	{
+		tvm.accept();
+		require(_circleStatus == CircleStatus.DEPLOYED || _circleStatus == CircleStatus.SETUPED, circle_is_already_launched, "Error: The circle is already launched.");
+		if(_paymentType == PaymentType.FIXED_PAY) {
+			require(fixedAmount >= circle_min_pay_per_round && fixedAmount <= circle_max_pay_per_round, pay_amount_is_out_of_range, "Error: The pay amount is out of range.");
+		}
+		if(_paymentType == PaymentType.FIXED_LOAN) {
+			require(fixedAmount >= (circle_min_pay_per_round * maxMembers) && fixedAmount <= (circle_max_pay_per_round * minMembers), pay_amount_is_out_of_range, "Error: The pay amount is out of range.");
+		}
+		require(minMembers >= circle_min_members && minMembers <= maxMembers && maxMembers <= circle_max_members, members_number_is_out_of_range, "Error: The number of members is out of range.");
+		(uint256 minRounds, uint256 r) = math.divmod(minMembers, winnersNumber);
+		require(r == 0 && minRounds >= circle_min_members, winners_number_is_invalid, "Error: The number of winners is invalid.");
+		require(patienceBenefit_x10000 <= circle_max_patience_benefit_x1000, patience_benefit_is_out_of_range, "Error: The patience benefit is out of range.");
+		
+		_circleName = circleName;
+		_fixedAmount = fixedAmount;
+		_minMembers = minMembers;
+		_maxMembers = maxMembers;
+		_winnersOrder = winnersOrder;
+		_winnersNumber = winnersNumber;
+		_patienceBenefit_x10000 = patienceBenefit_x10000;
+		_maxRounds = math.divc(maxMembers, winnersNumber);
+		
+		_circleStatus = CircleStatus.SETUPED;
+
+		emit CircleIsSet(address(this), _circleName, circleOwner, msg.sender);
+	}
+
+	function _launchCircle(uint256 startDate) internal {
+		tvm.accept();
+		require(_circleStatus == CircleStatus.SETUPED, circle_is_not_ready_for_launch,  "Error: The circle is not ready for launch.");
+		/* To Do */
+		// require(startDate > 10**9 && startDate < 10**10  // Start date must be a 10-digit number
+        //     && math.divc(startDate, 60*60*24) > math.divc(block.timestamp, 60*60*24) // and at least one day later
+        //     , start_date_is_out_of_range, "Error: The start date is out of range.");
+
+        _startDate = startDate;
+        _circleStatus = CircleStatus.LAUNCHED;
+
+		emit CircleLaunched(address(this), _circleName, circleOwner, msg.sender);
+    }
+
+	function _roundDueDate(uint8 roundIndex) internal view returns (uint256 dueDate) {
+        return _startDate > 0 && roundIndex < _maxRounds ? _startDate + (_roundDays * roundIndex * 60*60*24) : 0;
+    }
+
+	function _removeCircle() public view responsible returns (bool done) {
+		tvm.accept();
+		serviceAddress.transfer({ value: 0, flag: 128 + 32, bounce: false });
+		return { value: 0, bounce: false, flag: 64 } true;
+	}
+
+    // Public Gets
+	function getCircleDetails() public view returns (
+		address owner,
+		string circleName,
+		uint16 roundDays,
+		uint256 fixedAmount,
+		uint8 minMembers,
+		uint8 maxMembers,
+		uint256 startDate
+	) {
+        return (
+			circleOwner,
+			_circleName,
+			_roundDays,
+			_fixedAmount,
+			_minMembers,
+			_maxMembers,
+			_startDate
+		);
+    }
+    
+    function getCircleStatus() public view returns (string status) {
+        return _circleStatus == CircleStatus.DEPLOYED ? "deployed"
+            : _circleStatus == CircleStatus.SETUPED ? "setuped"
+            : _circleStatus == CircleStatus.LAUNCHED ? "launched"
+            : _circleStatus == CircleStatus.STARTED ? "started"
+            : _circleStatus == CircleStatus.COMPLETED ? "completed"
+            : _circleStatus == CircleStatus.PAUSED ? "paused"
+            : _circleStatus == CircleStatus.STOPED ? "stoped" : "undefined";
+    }
+}

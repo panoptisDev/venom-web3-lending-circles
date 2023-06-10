@@ -1,0 +1,95 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"serviceAccount","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "updateProfile",
+			"inputs": [
+				{"name":"fullName","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getAccountProfile",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"fullName","type":"string"}
+			]
+		},
+		{
+			"name": "getOwner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "withdraw",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"done","type":"bool"}
+			]
+		},
+		{
+			"name": "deleteProfile",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"done","type":"bool"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"accountsContractAddress","type":"address"},
+		{"key":2,"name":"accountAddress","type":"address"}
+	],
+	"events": [
+		{
+			"name": "AccountProfileCreated",
+			"inputs": [
+				{"name":"account","type":"address"},
+				{"name":"profile","type":"address"},
+				{"name":"createdAt","type":"uint64"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "AccountProfileUpdated",
+			"inputs": [
+				{"name":"fullName","type":"string"},
+				{"name":"updatedAt","type":"uint64"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"accountsContractAddress","type":"address"},
+		{"name":"accountAddress","type":"address"},
+		{"name":"_serviceAccount","type":"address"},
+		{"name":"_ownerPublicKey","type":"uint256"},
+		{"name":"_fullName","type":"string"},
+		{"name":"_username","type":"string"},
+		{"name":"_createdAt","type":"uint64"},
+		{"name":"_updatedAt","type":"uint64"}
+	]
+}

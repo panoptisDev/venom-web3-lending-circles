@@ -1,0 +1,133 @@
+{
+    "networks": [
+        "tomo_mainnet",
+        "tomo_testnet",
+        "venom_mainnet",
+        "venom_testnet",
+        "venom_devnet"
+    ],
+    "tomo_mainnet": {
+        "chainId": 88,
+        "chainName": "TomoChain",
+        "chainLogo": "https://cryptologos.cc/logos/tomochain-tomo-logo.png?v=025",
+        "environment": "evm",
+        "rpcUrl": "https://rpc.tomochain.com",
+        "gqlUrl": "",
+        "explorer": "https://tomoscan.io/",
+        "wallets": ["metamask"],
+        "links": {
+            "website": "https://www.tomochain.com/",
+            "twitter": "https://twitter.com/tomochain"
+        },
+        "nativeToken": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "name": "Tomo",
+            "symbol": "TOMO",
+            "decimals": 18,
+            "standard": "ERC20",
+            "logo": "https://cryptologos.cc/logos/tomochain-tomo-logo.png?v=025"
+        },
+        "supportedTokens": []
+    },
+    "tomo_testnet": {
+        "chainId": 89,
+        "chainName": "TomoChain Testnet",
+        "chainLogo": "https://cryptologos.cc/logos/tomochain-tomo-logo.png?v=025",
+        "environment": "evm",
+        "rpcUrl": "https://rpc.testnet.tomochain.com",
+        "gqlUrl": "",
+        "explorer": "https://testnet.tomoscan.io/",
+        "wallets": ["metamask"],
+        "links": {
+            "website": "https://www.tomochain.com/",
+            "twitter": "https://twitter.com/tomochain"
+        },
+        "nativeToken": {
+            "address": "0x0000000000000000000000000000000000000000",
+            "name": "Tomo",
+            "symbol": "TOMO",
+            "decimals": 18,
+            "standard": "ERC20",
+            "logo": "https://cryptologos.cc/logos/tomochain-tomo-logo.png?v=025"
+        },
+        "supportedTokens": []
+    },
+    "venom_mainnet": {
+        "chainId": 1000,
+        "chainName": "Venom Mainnet",
+        "chainLogo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4",
+        "environment": "tvm",
+        "rpcUrl": "https://jrpc.venom.foundation/",
+        "gqlUrl": "https://gql.venom.foundation",
+        "explorer": "https://venomscan.com/",
+        "wallets": ["venom-connect"],
+        "links": {
+            "website": "https://venom.foundation/",
+            "twitter": "https://twitter.com/venomfoundation"
+        },
+        "nativeToken": {
+            "address": "0:0000000000000000000000000000000000000000000000000000000000000000",
+            "name": "Venom",
+            "symbol": "VENOM",
+            "decimals": 9,
+            "standard": "TIP-3",
+            "logo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4"
+        },
+        "supportedTokens": []
+    },
+    "venom_testnet": {
+        "chainId": 1000,
+        "chainName": "Venom Testnet",
+        "chainLogo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4",
+        "environment": "tvm",
+        "rpcUrl": "https://jrpc-testnet.venom.foundation/rpc",
+        "gqlUrl": "https://gql-testnet.venom.foundation",
+        "explorer": "https://testnet.venomscan.com/",
+        "wallets": ["venom-connect"],
+        "links": {
+            "website": "https://venom.foundation/",
+            "twitter": "https://twitter.com/venomfoundation"
+        },
+        "nativeToken": {
+            "address": "0:0000000000000000000000000000000000000000000000000000000000000000",
+            "name": "Venom",
+            "symbol": "VENOM",
+            "decimals": 9,
+            "standard": "TIP-3",
+            "logo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4"
+        },
+        "supportedTokens": [
+            {
+                "address": "0:20470e6a6e33aa696263b5702608d69e3317c23bf20c2f921b38d6588c555603",
+                "name": "TokenRootUpgradeable Test USDT",
+                "symbol": "TUSDT",
+                "decimals": 6,
+                "standard": "TIP-3.2",
+                "logo": "https://raw.githubusercontent.com/BVFDT/venom-assets/master/icons/USDT/logo.svg"
+            }
+        ]
+    },
+    "venom_devnet": {
+        "chainId": 1002,
+        "chainName": "Venom Devnet",
+        "chainLogo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4",
+        "environment": "tvm",
+        "rpcUrl": "https://jrpc-devnet.venom.foundation/",
+        "gqlUrl": "https://jrpc-devnet.venom.foundation/",
+        "explorer": "https://devnet.venomscan.com/",
+        "wallets": ["venom-connect"],
+        "links": {
+            "website": "https://venom.foundation/",
+            "twitter": "https://twitter.com/venomfoundation"
+        },
+        "nativeToken": {
+            "address": "0:0000000000000000000000000000000000000000000000000000000000000000",
+            "name": "Venom",
+            "symbol": "VENOM",
+            "decimals": 9,
+            "standard": "TIP-3",
+            "logo": "https://avatars.githubusercontent.com/u/104076707?s=200&v=4"
+        },
+        "supportedTokens": []
+    }
+}

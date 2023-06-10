@@ -1,0 +1,60 @@
+// root for handle theme color dark and light in project
+:root {
+    --ptn-bg: #f9f9f9;
+    --ptn-bg-rgb: 247, 247, 247;
+    --ptn-second-bg: #ffffff;
+    --ptn-second-bg-rgb: 255, 255, 255;
+    --ptn-color: #0d0d0d;
+    --ptn-color-rgb: 13, 13, 13;
+    --ptn-btn-bg: #145fe5;
+    --ptn-btn-bg-rgb: 20, 95, 229;
+    --ptn-btn-color: #ffffff;
+    --ptn-btn-color-rgb: 255, 255, 255;
+    --ptn-blue: #2347b3;
+    // --ptn-blue: #4d60a4;
+    --ptn-blue-rgb: 35, 71, 179;
+    --ptn-second-blue: #4462be;
+    --ptn-second-blue-rgb: 68, 98, 190;
+    --ptn-third-blue: #3c4a77;
+    --ptn-third-blue-rgb: 60, 74, 119;
+    --ptn-light-blue: #cdd7e8;
+    --ptn-light-blue-rgb: 205, 215, 232;
+    --ptn-gray: #dee3e7;
+    --ptn-gray-rgb: 222, 227, 231;
+    --ptn-second-gray: #cccccc;
+    --ptn-second-gray-rgb: 204, 204, 204;
+    --ptn-third-gray: #888888;
+    --ptn-third-gray-rgb: 136, 136, 136;
+    --ptn-dark-gray: #0d0d0d;
+    --ptn-dark-gray-rgb: 13, 13, 13;
+    --ptn-red: #d80012;
+    --ptn-red-rgb: 216, 0, 18;
+    --ptn-second-red: #D85145;
+    --ptn-second-red-rgb: 216, 81, 69;
+    --ptn-green: #01bb2d;
+    --ptn-green-rgb: 1, 187, 45;
+    --ptn-second-green: #00918C;
+    --ptn-second-green-rgb: 0, 145, 140;
+    --ptn-third-green: #233332;
+    --ptn-third-green-rgb: 35, 51, 50;
+    --ptn-orange: #ff7d04;
+    --ptn-orange-rgb: 255, 125, 4;
+    --ptn-black: #000000;
+    --ptn-black-rgb: 0, 0, 0;
+
+    --ptn-venom-grean: #11a97d;
+    --ptn-venom-second-grean: #15cc97;
+    --ptn-venom-third-grean: #094030;
+    --ptn-venom-grean-rgb: r17, 169, 125;
+
+    // --ptn-tomo-logo: "";
+}
+
+[theme="dark"] {
+    --ptn-bg: #1b1b1b;
+    --ptn-bg-rgb: 33, 33, 33;
+    --ptn-second-bg: #212121;
+    --ptn-second-bg-rgb: 0, 0, 0;
+    --ptn-color: #f9f9f9;
+    --ptn-color-rgb: 247, 247, 247;
+}

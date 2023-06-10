@@ -1,0 +1,104 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"paymentToken","type":"address"},
+				{"name":"roundDays","type":"uint16"},
+				{"name":"paymentType","type":"uint8"},
+				{"name":"creatorEarnings_x10000","type":"uint16"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_removeCircle",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"done","type":"bool"}
+			]
+		},
+		{
+			"name": "getCircleDetails",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"owner","type":"address"},
+				{"name":"circleName","type":"string"},
+				{"name":"roundDays","type":"uint16"},
+				{"name":"fixedAmount","type":"uint256"},
+				{"name":"minMembers","type":"uint8"},
+				{"name":"maxMembers","type":"uint8"},
+				{"name":"startDate","type":"uint256"}
+			]
+		},
+		{
+			"name": "getCircleStatus",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"status","type":"string"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"version","type":"string"},
+		{"key":2,"name":"circleOwner","type":"address"},
+		{"key":3,"name":"serviceAddress","type":"address"},
+		{"key":4,"name":"nonce","type":"uint16"}
+	],
+	"events": [
+		{
+			"name": "CircleIsSet",
+			"inputs": [
+				{"name":"circleContract","type":"address"},
+				{"name":"cirleName","type":"string"},
+				{"name":"circleOwner","type":"address"},
+				{"name":"circleCreator","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "CircleLaunched",
+			"inputs": [
+				{"name":"circleContract","type":"address"},
+				{"name":"cirleName","type":"string"},
+				{"name":"circleOwner","type":"address"},
+				{"name":"circleCreator","type":"address"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"version","type":"string"},
+		{"name":"circleOwner","type":"address"},
+		{"name":"serviceAddress","type":"address"},
+		{"name":"nonce","type":"uint16"},
+		{"name":"_ownerPublicKey","type":"uint256"},
+		{"name":"_circleName","type":"string"},
+		{"name":"_creatorEarnings_x10000","type":"uint16"},
+		{"name":"_roundDays","type":"uint16"},
+		{"name":"_paymentType","type":"uint8"},
+		{"name":"_fixedAmount","type":"uint256"},
+		{"name":"_minMembers","type":"uint8"},
+		{"name":"_maxMembers","type":"uint8"},
+		{"name":"_winnersOrder","type":"uint8"},
+		{"name":"_winnersNumber","type":"uint8"},
+		{"name":"_patienceBenefit_x10000","type":"uint16"},
+		{"name":"_circleStatus","type":"uint8"},
+		{"name":"_paymentToken","type":"address"},
+		{"name":"_startDate","type":"uint256"},
+		{"name":"_roundIndex","type":"uint8"},
+		{"name":"_maxRounds","type":"uint8"}
+	]
+}

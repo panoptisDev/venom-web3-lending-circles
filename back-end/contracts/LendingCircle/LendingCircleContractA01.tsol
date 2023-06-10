@@ -1,0 +1,195 @@
+pragma ever-solidity >=0.62.0;
+pragma AbiHeader expire;
+pragma AbiHeader time;
+pragma AbiHeader pubkey;
+
+import "./interfaces/LendingCircleBase.tsol";
+
+contract LendingCircleContractA01 is LendingCircleBase {
+
+	struct Whitelist {
+		bool alive;
+		address moderator;
+		bool joined;
+	}
+	mapping(address => Whitelist) _whitelist;
+	uint8 _totalWhitelisted;
+	
+	struct Member {
+		bool alive;
+		bool isModerator;
+		uint8 selectedRound;
+		uint256 totalPayments;
+		uint256 loanAmount;
+		bool debtor;
+	}
+	mapping(address => Member) _members;
+	uint8 _totalMembers;
+
+	mapping(uint8 => address) _selectedRounds;
+
+	struct Winner {
+		bool isWon;
+		uint8 winRound;
+		uint256 loanAmount;
+	}
+	mapping(address => Winner) _winners;
+
+	/**
+	* Events
+	**/
+	event LogStartOfRound(uint8 roundIndex);
+	event LogEndOfCircle();
+
+	/**
+	* Modifiers
+	**/
+	// Only Circle Owner
+	modifier onlyOwner() {
+		require(msg.pubkey() == _ownerPublicKey || msg.sender == circleOwner, 401);
+		_;
+	}
+
+	// Only Moderators as well as Circle Owner
+	modifier onlyModerators() {
+		require(msg.pubkey() == _ownerPublicKey || msg.sender == circleOwner || (_members[msg.sender].alive && _members[msg.sender].isModerator));
+		_;
+	}
+	
+	// Only Members as well as Circle Owner
+	modifier onlyMembers() {
+		require(msg.sender == circleOwner || _members[msg.sender].alive);
+		_;
+	}
+
+	/*********************************************************************************/
+	/* CONSTRUCTOR */
+	/*********************************************************************************/
+	constructor(
+		address paymentToken,
+		uint16 roundDays,
+		PaymentType paymentType,
+		uint16 creatorEarnings_x10000
+	) LendingCircleBase (paymentToken, roundDays, paymentType, creatorEarnings_x10000) public {
+		tvm.accept();
+		// Add circle owner to the whitelist
+		_whitelist[circleOwner] = Whitelist({
+			alive: true,
+			moderator: circleOwner,
+			joined: false
+		});
+		_totalWhitelisted = 1;
+	}
+
+	/*********************************************************************************/
+	/* FUNCTIONS */
+	/*********************************************************************************/
+	function setCircle(
+		string circleName,
+		uint256 fixedAmount,
+		uint8 minMembers,
+		uint8 maxMembers,
+		WinnersOrder winnersOrder,
+		uint8 winnersNumber,
+		uint16 patienceBenefit_x10000
+	) external onlyOwner externalMsg {
+		tvm.accept();
+		_setCircle(
+			circleName,
+			fixedAmount,
+			minMembers,
+			maxMembers,
+			winnersOrder,
+			winnersNumber,
+			patienceBenefit_x10000
+        );
+    }
+
+	function launchCircle(uint256 startDate) external onlyOwner externalMsg {
+		tvm.accept();
+        /* To Do */
+		// require(_totalWhitelisted >= _minMembers, 201, "Error: The number of whitelist accounts before launch must be at least equal to the CIRCLES_MIN_MEMBERS.");
+		_launchCircle(
+			startDate
+        );
+    }
+
+	function addModerator(address accountAddress) external onlyOwner {
+		tvm.accept();
+		require(_members[accountAddress].alive, 202, "Error: The account is not a member.");
+        _members[accountAddress].isModerator = true;
+    }
+
+	// Circle Whitelist Functions
+    // --------------------------------------------------------------------------------
+    function addToWhitelist(address[] listedAddress) external onlyModerators {
+		tvm.accept();
+        for (uint8 i = 0; i < listedAddress.length; i++) {
+            if(!_whitelist[listedAddress[i]].alive) {
+                _whitelist[listedAddress[i]] = Whitelist({
+                    alive: true,
+                    moderator: msg.sender,
+                    joined: false
+                });
+                _totalWhitelisted++;
+            }
+        }
+    }
+    
+    function removeFromWhitelist(address[] delistedAddress) external onlyModerators {
+		tvm.accept();
+        for (uint8 i = 0; i < delistedAddress.length; i++) {
+            if(_whitelist[delistedAddress[i]].alive && !_whitelist[delistedAddress[i]].joined &&
+                (_whitelist[delistedAddress[i]].moderator == msg.sender || msg.sender == circleOwner)) {
+                _whitelist[delistedAddress[i]].alive = false;
+                _totalWhitelisted--;
+            }
+        }
+    }
+
+	// Only Whitelist Accounts
+    // --------------------------------------------------------------------------------
+    function joinCircle(uint8 selectedRound) external {
+        require(_whitelist[msg.sender].alive && !_whitelist[msg.sender].joined, 301, "Error: The circle status is not ready for launch.");
+        require(_circleStatus == CircleStatus.LAUNCHED, 302, "Error: The circle status is not ready for join.");
+        require(!_members[msg.sender].alive, 303, "Error: Already a member.");
+        require(_totalMembers < _maxMembers, 304, "Error: Membership capacity is full.");
+
+        _members[msg.sender] = Member({
+            alive: true,
+            isModerator: false,
+            selectedRound: selectedRound,
+            totalPayments: 0,
+            loanAmount: 0,
+            debtor: false
+        });
+        if(_winnersOrder == WinnersOrder.FIXED) _selectedRounds[selectedRound] = msg.sender;
+        _whitelist[msg.sender].joined = true;
+        _totalMembers++;
+    }
+
+	// Only Members as well as Owner
+    // --------------------------------------------------------------------------------
+    function memberChangeRound(uint8 selectedRound) external onlyMembers {
+        require(_winnersOrder == WinnersOrder.FIXED && selectedRound > 0 && _selectedRounds[selectedRound] == address(0), 401, "Error: The selected round is already chosen.");
+        _members[msg.sender].selectedRound = selectedRound;
+        _selectedRounds[selectedRound] = msg.sender;
+    }
+
+    function memberPayment() external onlyMembers {
+        require(_members[msg.sender].alive, 402, "Error: Only circle members can pay.");
+        _members[msg.sender].totalPayments += msg.value;
+    }
+
+	// Only Moderators as well as Owner
+    // --------------------------------------------------------------------------------
+    function getWhitelist(address accountAddress) public view onlyModerators returns (Whitelist) {
+        return _whitelist[accountAddress];
+    }
+
+    // Only Members as well as Owner
+    // --------------------------------------------------------------------------------
+    function getMember(address accountAddress) public view onlyMembers returns (Member) {
+        return _members[accountAddress];
+    }
+}
